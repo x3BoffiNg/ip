@@ -63,6 +63,8 @@ public class BoffBot {
 
                     }
 
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number after '" + part[0] + "'.");
                 } catch (BoffBotException e) {
                     System.out.println(e.getMessage());
                 }
@@ -128,6 +130,32 @@ public class BoffBot {
                     System.out.println(e.getMessage());
                 }
 
+            }else if (input.startsWith("delete")) {
+                String[] part = input.split(" ");
+
+                try {
+                    //Validate command format
+                    if (part.length < 2) {
+                        throw new BoffBotException("Invalid input!! Please Use: delete <number>");
+                    }
+
+                    int taskNum = Integer.parseInt(part[1]);
+
+                    //Validate task number range
+                    if (taskNum < 1 || taskNum > taskList.size()) {
+                        throw new BoffBotException("Invalid!! Please enter a number between 1 and " + taskList.size());
+                    }
+                    Task removedTask = taskList.remove(taskNum - 1);
+
+                    System.out.println("------------------------");
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(removedTask);
+                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number after '" + part[0] + "'.");
+                } catch (BoffBotException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             else{
                 try {
