@@ -7,7 +7,7 @@ public class BoffBot {
 
         Scanner sc = new Scanner(System.in);
 
-        List<String> inputList = new ArrayList<>();
+        ArrayList<Task> taskList = new ArrayList<>();
 
         String logo = "------------------------\n"
                 + "Hello! I'm BoffBot\n"
@@ -21,25 +21,71 @@ public class BoffBot {
             String input = sc.nextLine();
 
             if(input.equalsIgnoreCase("bye")){
-                System.out.println("------------------------\n");
+                System.out.println("------------------------");
                 System.out.println("       " + input);
-
                 break;
+
             } else if (input.equalsIgnoreCase("list")) {
-                System.out.println("------------------------\n");
-                for (int i=0; i < inputList.size(); i++ ){
-                    System.out.println((i+1) +". " + inputList.get(i));
+                System.out.println("------------------------");
+                for (int i = 0; i < taskList.size(); i++) {
+                    System.out.println((i + 1) + ". " + taskList.get(i));
                 }
 
+                String markInput = sc.nextLine();
+
+                String[] part = markInput.split(" ");
+                //Validate command format
+                if (part.length < 2) {
+                    System.out.println("Invalid input!! Please Use: mark <number> or unmark <number>");
+                    continue;
+                }
+
+                try {
+                    int taskNum = Integer.parseInt(part[1]);
+
+                    //Validate task number range
+                    if (taskNum < 1 || taskNum > taskList.size()) {
+                        System.out.println("Invalid!! Please enter a number between 1 and " + taskList.size());
+                        continue;
+                    }
+                    Task task = taskList.get(taskNum - 1);
+
+                    if (part[0].equalsIgnoreCase("mark")) {
+                        task.mark();
+                        System.out.println("------------------------");
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println(task);
+
+                    } else if (part[0].equalsIgnoreCase("unmark")) {
+                        task.unmark();
+                        System.out.println("------------------------");
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println(task);
+
+                    } else {
+                        System.out.println("Unknown command. Use 'mark' or 'unmark'.");
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number after 'mark' or 'unmark'.");
+                } catch (Exception e) {
+                    System.out.println("An error occurred: " + e.getMessage());
+                }
             }
+
             else{
-                inputList.add(input);
-                System.out.println("------------------------\n");
+                //Add new task with validation
+                if (input.trim().isEmpty()) {
+                    System.out.println("Task description cannot be empty.");
+                    continue;
+                }
+
+                Task newTask = new Task(input);
+                taskList.add(newTask);
+                System.out.println("------------------------");
                 System.out.println("added: " +input);
-                System.out.println("------------------------\n");
+                System.out.println("------------------------");
             }
-
-
         }
 
         String logo2 = "------------------------\n"
