@@ -22,18 +22,18 @@ public class BoffBot {
 
             if(input.equalsIgnoreCase("bye")){
                 System.out.println("------------------------");
-                System.out.println("       " + input);
+                System.out.println("          " + input);
                 break;
 
             } else if (input.equalsIgnoreCase("list")) {
                 System.out.println("------------------------");
+                System.out.println("Here are the tasks in your list:");
+
                 for (int i = 0; i < taskList.size(); i++) {
                     System.out.println((i + 1) + ". " + taskList.get(i));
                 }
-
-                String markInput = sc.nextLine();
-
-                String[] part = markInput.split(" ");
+            }else if(input.startsWith("mark ") || input.startsWith("unmark ")){
+                String[] part = input.split(" ");
                 //Validate command format
                 if (part.length < 2) {
                     System.out.println("Invalid input!! Please Use: mark <number> or unmark <number>");
@@ -71,6 +71,54 @@ public class BoffBot {
                 } catch (Exception e) {
                     System.out.println("An error occurred: " + e.getMessage());
                 }
+            }else if (input.startsWith("todo")) {
+                String description = input.substring(5).trim();
+                Task newTask = new Todo(description);
+                taskList.add(newTask);
+                System.out.println("------------------------");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newTask);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+
+            }else if (input.startsWith("deadline")) {
+                String res = input.substring(9).trim();
+                String[] parts = res.split(" /by ");
+
+                if (parts.length < 2) {
+                    System.out.println("------------------------\n");
+                    System.out.println("Invalid!!! Please format as such: deadline <description> /by <date>");
+                } else {
+                    String description = parts[0].trim();
+                    String duedate = parts[1].trim();
+
+                    Task newTask = new Deadline(description, duedate);
+                    taskList.add(newTask);
+                    System.out.println("------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                }
+            }else if (input.startsWith("event")) {
+
+                String rest = input.substring(6).trim();
+                String[] parts = rest.split(" /from | /to ");
+                if (parts.length < 3) {
+                    System.out.println("------------------------");
+                    System.out.println("Invalid input!! Please format it as such: <description> /from <start> /to <end>");
+
+                } else{
+                    String description = parts[0].trim();
+                    String start = parts[1].trim();
+                    String end = parts[2].trim();
+                    Task newTask = new Event(description, start, end);
+                    taskList.add(newTask);
+                    System.out.println("------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(newTask);
+                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+
+                }
+
             }
 
             else{
