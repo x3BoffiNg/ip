@@ -1,11 +1,51 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BoffBot {
-    public static void main(String[] args) {
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
+public class BoffBot {
+    private static final String FILE_PATH = "data/boffbot.txt";
+
+    private static void ensureFileExists() throws IOException {
+        File file = new File(FILE_PATH);
+        file.getParentFile().mkdirs();  // create /data folder if missing
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+    }
+
+    private static void saveTasks(List<Task> tasks) throws IOException {
+        FileWriter fw = new FileWriter(FILE_PATH); // overwrites file
+
+        for (Task t : tasks) {
+            fw.write(t.toFileFormat() + System.lineSeparator());
+        }
+
+        fw.close();
+    }
+
+
+    private static void loadTasks(List<Task> taskList) throws IOException {
+        File file = new File(FILE_PATH);
+        Scanner fileScanner = new Scanner(file);
+
+        while (fileScanner.hasNextLine()) {
+            String line = fileScanner.nextLine();
+            Task t = Task.fromFileFormat(line);  // we define this next
+            taskList.add(t);
+        }
+        fileScanner.close();
+    }
+
+
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
 
         ArrayList<Task> taskList = new ArrayList<>();
 
@@ -14,6 +54,13 @@ public class BoffBot {
                 + "What can I do for you?\n"
                 + "------------------------\n";
         System.out.println(logo);
+
+        try {
+            ensureFileExists();
+            loadTasks(taskList);
+        } catch (IOException e) {
+            System.out.println("Theres currently no task!! Please add some tasks.");
+        }
 
         while(true){
 
@@ -55,11 +102,24 @@ public class BoffBot {
                         System.out.println("Nice! I've marked this task as done:");
                         System.out.println(task);
 
+                        try {
+                            saveTasks(taskList);
+                        } catch (IOException e) {
+                            System.out.println("Error saving tasks.");
+                        }
+
+
                     } else if (part[0].equalsIgnoreCase("unmark")) {
                         task.unmark();
                         System.out.println("------------------------");
                         System.out.println("OK, I've marked this task as not done yet:");
                         System.out.println(task);
+
+                        try {
+                            saveTasks(taskList);
+                        } catch (IOException e) {
+                            System.out.println("Error saving tasks.");
+                        }
 
                     }
 
@@ -76,6 +136,13 @@ public class BoffBot {
                     }
                     Task newTask = new Todo(description);
                     taskList.add(newTask);
+
+                    try {
+                        saveTasks(taskList);
+                    } catch (IOException e) {
+                        System.out.println("Error saving tasks.");
+                    }
+
                     System.out.println("------------------------");
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newTask);
@@ -97,6 +164,13 @@ public class BoffBot {
 
                         Task newTask = new Deadline(description, duedate);
                         taskList.add(newTask);
+
+                        try {
+                            saveTasks(taskList);
+                        } catch (IOException e) {
+                            System.out.println("Error saving tasks.");
+                        }
+
                         System.out.println("------------------------");
                         System.out.println("Got it. I've added this task:");
                         System.out.println(newTask);
@@ -119,6 +193,13 @@ public class BoffBot {
                         String end = parts[2].trim();
                         Task newTask = new Event(description, start, end);
                         taskList.add(newTask);
+
+                        try {
+                            saveTasks(taskList);
+                        } catch (IOException e) {
+                            System.out.println("Error saving tasks.");
+                        }
+
                         System.out.println("------------------------");
                         System.out.println("Got it. I've added this task:");
                         System.out.println(newTask);
@@ -146,6 +227,12 @@ public class BoffBot {
                         throw new BoffBotException("Invalid!! Please enter a number between 1 and " + taskList.size());
                     }
                     Task removedTask = taskList.remove(taskNum - 1);
+
+                    try {
+                        saveTasks(taskList);
+                    } catch (IOException e) {
+                        System.out.println("Error saving tasks.");
+                    }
 
                     System.out.println("------------------------");
                     System.out.println("Noted. I've removed this task:");
