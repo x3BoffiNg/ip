@@ -1,265 +1,38 @@
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-
 public class BoffBot {
-    private static final String FILE_PATH = "data/boffbot.txt";
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
-    private static void ensureFileExists() throws IOException {
-        File file = new File(FILE_PATH);
-        file.getParentFile().mkdirs();  // create /data folder if missing
-        if (!file.exists()) {
-            file.createNewFile();
+    public BoffBot(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (IOException e) {
+            tasks = new TaskList();
         }
     }
 
-    private static void saveTasks(List<Task> tasks) throws IOException {
-        FileWriter fw = new FileWriter(FILE_PATH); // overwrites file
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
 
-        for (Task t : tasks) {
-            fw.write(t.toFileFormat() + System.lineSeparator());
+        while (!isExit) {
+            try {
+                String input = ui.readCommand();
+                ui.showLine();
+
+                isExit = Parser.parse(input, tasks, ui, storage);
+
+            } catch (Exception e) {
+                ui.showMessage(e.getMessage());
+            }
+            ui.showLine();
         }
-
-        fw.close();
     }
-
-
-    private static void loadTasks(List<Task> taskList) throws IOException {
-        File file = new File(FILE_PATH);
-        Scanner fileScanner = new Scanner(file);
-
-        while (fileScanner.hasNextLine()) {
-            String line = fileScanner.nextLine();
-            Task t = Task.fromFileFormat(line);  // we define this next
-            taskList.add(t);
-        }
-        fileScanner.close();
-    }
-
-
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-
-        ArrayList<Task> taskList = new ArrayList<>();
-
-        String logo = "------------------------\n"
-                + "Hello! I'm BoffBot\n"
-                + "What can I do for you?\n"
-                + "------------------------\n";
-        System.out.println(logo);
-
-        try {
-            ensureFileExists();
-            loadTasks(taskList);
-        } catch (IOException e) {
-            System.out.println("Theres currently no task!! Please add some tasks.");
-        }
-
-        while(true){
-
-            System.out.println("Input: ");
-            String input = sc.nextLine();
-
-            if(input.equalsIgnoreCase("bye")){
-                System.out.println("------------------------");
-                System.out.println("          " + input);
-                break;
-
-            } else if (input.equalsIgnoreCase("list")) {
-                System.out.println("------------------------");
-                System.out.println("Here are the tasks in your list:");
-
-                for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println((i + 1) + ". " + taskList.get(i));
-                }
-            }else if(input.startsWith("mark ") || input.startsWith("unmark ")){
-                String[] part = input.split(" ");
-
-                try {
-                    //Validate command format
-                    if (part.length < 2) {
-                        throw new BoffBotException("Invalid input!! Please Use: mark <number> or unmark <number>");
-                    }
-
-                    int taskNum = Integer.parseInt(part[1]);
-
-                    //Validate task number range
-                    if (taskNum < 1 || taskNum > taskList.size()) {
-                        throw new BoffBotException("Invalid!! Please enter a number between 1 and " + taskList.size());
-                    }
-                    Task task = taskList.get(taskNum - 1);
-
-                    if (part[0].equalsIgnoreCase("mark")) {
-                        task.mark();
-                        System.out.println("------------------------");
-                        System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(task);
-
-                        try {
-                            saveTasks(taskList);
-                        } catch (IOException e) {
-                            System.out.println("Error saving tasks.");
-                        }
-
-
-                    } else if (part[0].equalsIgnoreCase("unmark")) {
-                        task.unmark();
-                        System.out.println("------------------------");
-                        System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println(task);
-
-                        try {
-                            saveTasks(taskList);
-                        } catch (IOException e) {
-                            System.out.println("Error saving tasks.");
-                        }
-
-                    }
-
-                } catch (NumberFormatException e) {
-                    System.out.println("Please enter a valid number after '" + part[0] + "'.");
-                } catch (BoffBotException e) {
-                    System.out.println(e.getMessage());
-                }
-            }else if (input.startsWith("todo")) {
-                try {
-                    String description = input.substring(4).trim();
-                    if (description.isEmpty()) {
-                        throw new BoffBotException("Invalid input!!! The description of a todo cannot be empty.");
-                    }
-                    Task newTask = new Todo(description);
-                    taskList.add(newTask);
-
-                    try {
-                        saveTasks(taskList);
-                    } catch (IOException e) {
-                        System.out.println("Error saving tasks.");
-                    }
-
-                    System.out.println("------------------------");
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newTask);
-                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-                }catch(BoffBotException e){
-                    System.out.println("------------------------");
-                    System.out.println(e.getMessage());
-                }
-            }else if (input.startsWith("deadline")) {
-                try {
-                    String res = input.substring(8).trim();
-                    String[] parts = res.split(" /by ");
-
-                    if (parts.length < 2) {
-                        throw new BoffBotException("Invalid!!! Please format as such: deadline <description> /by <date>");
-                    } else {
-                        String description = parts[0].trim();
-                        String duedate = parts[1].trim();
-
-                        Task newTask = new Deadline(description, duedate);
-                        taskList.add(newTask);
-
-                        try {
-                            saveTasks(taskList);
-                        } catch (IOException e) {
-                            System.out.println("Error saving tasks.");
-                        }
-
-                        System.out.println("------------------------");
-                        System.out.println("Got it. I've added this task:");
-                        System.out.println(newTask);
-                        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-                    }
-                } catch (BoffBotException e) {
-                    System.out.println("------------------------");
-                    System.out.println(e.getMessage());
-                }
-            }else if (input.startsWith("event")) {
-                try {
-                    String rest = input.substring(5).trim();
-                    String[] parts = rest.split(" /from | /to ");
-                    if (parts.length < 3) {
-                        throw new BoffBotException("Invalid input!! Please format it as such: <description> /from <start> /to <end>");
-
-                    } else {
-                        String description = parts[0].trim();
-                        String start = parts[1].trim();
-                        String end = parts[2].trim();
-                        Task newTask = new Event(description, start, end);
-                        taskList.add(newTask);
-
-                        try {
-                            saveTasks(taskList);
-                        } catch (IOException e) {
-                            System.out.println("Error saving tasks.");
-                        }
-
-                        System.out.println("------------------------");
-                        System.out.println("Got it. I've added this task:");
-                        System.out.println(newTask);
-                        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-
-                    }
-                }catch (BoffBotException e) {
-                    System.out.println("------------------------");
-                    System.out.println(e.getMessage());
-                }
-
-            }else if (input.startsWith("delete")) {
-                String[] part = input.split(" ");
-
-                try {
-                    //Validate command format
-                    if (part.length < 2) {
-                        throw new BoffBotException("Invalid input!! Please Use: delete <number>");
-                    }
-
-                    int taskNum = Integer.parseInt(part[1]);
-
-                    //Validate task number range
-                    if (taskNum < 1 || taskNum > taskList.size()) {
-                        throw new BoffBotException("Invalid!! Please enter a number between 1 and " + taskList.size());
-                    }
-                    Task removedTask = taskList.remove(taskNum - 1);
-
-                    try {
-                        saveTasks(taskList);
-                    } catch (IOException e) {
-                        System.out.println("Error saving tasks.");
-                    }
-
-                    System.out.println("------------------------");
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println(removedTask);
-                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
-                } catch (NumberFormatException e) {
-                    System.out.println("Please enter a valid number after '" + part[0] + "'.");
-                } catch (BoffBotException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            else{
-                try {
-                    throw new BoffBotException("I'm Sorry I don't know what that means TT");
-
-                }catch(BoffBotException e){
-                    System.out.println("------------------------");
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-
-        String logo2 = "------------------------\n"
-                + "Thanks for using BoffBot!!\n"
-                + "Bye. Hope to see you again soon!\n"
-                + "------------------------\n";
-        System.out.println(logo2);
-
+        new BoffBot("data/boffbot.txt").run();
     }
 }
