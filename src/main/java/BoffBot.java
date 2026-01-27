@@ -9,7 +9,8 @@ public class BoffBot {
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-        } catch (IOException e) {
+        } catch (IOException | BoffBotException e) {
+            ui.showMessage("Error loading data file: " + e.getMessage());
             tasks = new TaskList();
         }
     }

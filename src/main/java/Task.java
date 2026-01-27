@@ -32,7 +32,7 @@ public class Task {
         return "T | " + (isDone ? "1" : "0") + " | " + description;
     }
 
-    public static Task fromFileFormat(String line) {
+    public static Task fromFileFormat(String line)  throws BoffBotException {
         String[] parts = line.split(" \\| ");
         String type = parts[0];
         boolean isDone = parts[1].equals("1");

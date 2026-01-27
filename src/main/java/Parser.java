@@ -71,7 +71,7 @@ public class Parser {
             String[] parts = res.split(" /by ");
 
             if (parts.length < 2) {
-                throw new BoffBotException("Invalid!!! Please format as such: deadline <description> /by <date>");
+                throw new BoffBotException("Invalid!!! Please format as such: deadline <description> /by <yyyy-mm-dd>");
             }
 
             String description = parts[0].trim();
@@ -93,7 +93,7 @@ public class Parser {
             String[] parts = rest.split(" /from | /to ");
 
             if (parts.length < 3) {
-                throw new BoffBotException("Invalid input!! Please format it as such: <description> /from <start> /to <end>");
+                throw new BoffBotException("Invalid input!! Please format it as such: <description> /from <yyyy-mm-dd> /to <yyyy-mm-dd>");
             }
 
             String description = parts[0].trim();
