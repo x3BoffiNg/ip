@@ -1,3 +1,3 @@
-D | 0 | return | 2026-12-01
-D | 1 | prog | 2026-01-01
-T | 1 | testing
+T | 0 | read books
+E | 1 | proj meeting | 2026-01-12 | 2026-02-01
+D | 0 | exam finals | 2026-12-01

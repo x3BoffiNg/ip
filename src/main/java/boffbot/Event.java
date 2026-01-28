@@ -30,7 +30,7 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " | " + end;
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " | " + end;
     }
 
 }
