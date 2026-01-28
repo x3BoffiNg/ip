@@ -139,7 +139,30 @@ public class Parser {
             ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
             return false;
         }
+        if (input.startsWith("find")) {
+            String keyword = input.substring(5).trim();
 
+            if (keyword.isEmpty()) {
+                throw new BoffBotException("Please provide a keyword to search for.");
+            }
+
+            ui.showMessage("Here are the matching tasks in your list:");
+
+            int count = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                    ui.showMessage((count + 1) + ". " + task);
+                    count++;
+                }
+            }
+
+            if (count == 0) {
+                ui.showMessage("No matching tasks found.");
+            }
+
+            return false;
+        }
         // UNKNOWN COMMAND
         throw new BoffBotException("I'm Sorry I don't know what that means TT");
     }
