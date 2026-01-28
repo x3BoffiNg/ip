@@ -1,7 +1,20 @@
 package boffbot;
 
+/**
+ * Parses user commands and executes corresponding actions.
+ */
 public class Parser {
 
+    /**
+     * Parses user input and performs the corresponding command.
+     *
+     * @param input The user input.
+     * @param tasks The task list.
+     * @param ui The user interface.
+     * @param storage The storage handler.
+     * @return True if the user wants to exit, false otherwise.
+     * @throws Exception If the command is invalid.
+     */
     public static boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
 
         // EXIT
