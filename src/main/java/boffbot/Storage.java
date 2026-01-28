@@ -13,7 +13,9 @@ public class Storage {
     public List<Task> load() throws IOException, BoffBotException {
         File file = new File(filePath);
         file.getParentFile().mkdirs();
-        if (!file.exists()) file.createNewFile();
+        if (!file.exists()) {
+            file.createNewFile();
+        }
 
         List<Task> tasks = new ArrayList<>();
         Scanner s = new Scanner(file);
