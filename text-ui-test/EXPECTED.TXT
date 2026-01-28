@@ -1,5 +1,5 @@
 ------------------------
-Hello! I'm BoffBot
+Hello! I'm boffbot.BoffBot
 What can I do for you?
 ------------------------
 
@@ -41,7 +41,7 @@ Input:
 ------------------------
           bye
 ------------------------
-Thanks for using BoffBot!!
+Thanks for using boffbot.BoffBot!!
 Bye. Hope to see you again soon!
 ------------------------
 

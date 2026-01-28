@@ -1,3 +1,5 @@
+package boffbot;
+
 import java.util.ArrayList;
 import java.util.List;
 

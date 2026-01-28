@@ -1,3 +1,5 @@
+package boffbot;
+
 import java.io.*;
 import java.util.*;
 

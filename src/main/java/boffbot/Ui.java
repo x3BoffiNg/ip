@@ -1,3 +1,5 @@
+package boffbot;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -5,7 +7,7 @@ public class Ui {
 
     public void showWelcome() {
         System.out.println("------------------------");
-        System.out.println("Hello! I'm BoffBot");
+        System.out.println("Hello! I'm boffbot.BoffBot");
         System.out.println("What can I do for you?");
         System.out.println("------------------------");
     }

@@ -1,3 +1,5 @@
+package boffbot;
+
 import java.io.IOException;
 public class BoffBot {
     private Storage storage;

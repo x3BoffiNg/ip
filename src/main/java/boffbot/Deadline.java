@@ -1,3 +1,5 @@
+package boffbot;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,7 +10,7 @@ public class Deadline extends Task {
     private static final DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter output = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
-    public Deadline(String description, String dueDate) throws BoffBotException{
+    public Deadline(String description, String dueDate) throws BoffBotException {
         super(description);
 
         try {
