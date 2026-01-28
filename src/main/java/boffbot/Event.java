@@ -11,8 +11,8 @@ public class Event extends Task {
     protected LocalDate  start;
     protected LocalDate  end;
 
-    private static final DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter output = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final DateTimeFormatter INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
      * Constructs an Event task.
@@ -26,8 +26,8 @@ public class Event extends Task {
         super(description);
 
         try {
-            this.start = LocalDate.parse(start, input);
-            this.end = LocalDate.parse(end, input);
+            this.start = LocalDate.parse(start, INPUT);
+            this.end = LocalDate.parse(end, INPUT);
 
         } catch (DateTimeParseException e) {
             throw new BoffBotException("Date must be in format yyyy-mm-dd");
@@ -36,7 +36,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (start: " + start.format(output) + " end: " + end.format(output) + ")";
+        return "[E]" + super.toString() + " (start: " + start.format(OUTPUT) + " end: " + end.format(OUTPUT) + ")";
     }
 
     @Override

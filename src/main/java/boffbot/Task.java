@@ -84,7 +84,9 @@ public class Task {
                 throw new IllegalArgumentException();
         }
 
-        if (isDone) t.mark();
+        if (isDone) {
+            t.mark();
+        }
         return t;
     }
 
