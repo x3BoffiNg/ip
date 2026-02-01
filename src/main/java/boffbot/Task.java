@@ -90,4 +90,7 @@ public class Task {
         return t;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }
