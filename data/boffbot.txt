@@ -1,4 +1,4 @@
-T | 0 | read books
 D | 1 | finals | 2026-08-21
-E | 1 | peer evaluaation | 2026-12-01 | 2026-12-22
-T | 1 | meet
+E | 0 | peer evaluaation | 2026-12-01 | 2026-12-22
+T | 0 | test1
+D | 0 | test2 | 2026-12-12

@@ -32,7 +32,9 @@ public class Parser {
         assert ui != null : "UI should not be null";
         assert storage != null : "Storage should not be null";
 
-
+        if (isExitCommand(input, ui)) {
+            return true;
+        }
 
         if (isListCommand(input, tasks, ui)) {
             return false;
@@ -247,28 +249,27 @@ public class Parser {
         if (!input.startsWith(COMMAND_FIND)) {
             return false;
         }
-
         String keyword = input.substring(COMMAND_FIND.length()).trim();
         if (keyword.isEmpty()) {
             throw new BoffBotException("Please provide a keyword to search for.");
         }
 
-        ui.showMessage("Here are the matching tasks in your list:");
-        int count = 0;
 
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
-                ui.showMessage((count + 1) + ". " + task);
-                count++;
-            }
-        }
+        ui.showMessage("Here are the matching tasks in your list:");
+
+        long count = tasks.getAll().stream()
+                .filter(task -> task.getDescription()
+                        .toLowerCase()
+                        .contains(keyword.toLowerCase()))
+                .peek(task -> ui.showMessage(task.toString()))
+                .count();
 
         if (count == 0) {
             ui.showMessage("No matching tasks found.");
         }
 
         return true;
+
     }
 
     /**
