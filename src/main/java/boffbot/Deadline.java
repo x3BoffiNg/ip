@@ -23,8 +23,11 @@ public class Deadline extends Task {
     public Deadline(String description, String dueDate) throws BoffBotException {
         super(description);
 
+        assert dueDate != null : "Deadline dueDate should not be null";
+
         try {
             this.dueDate = LocalDate.parse(dueDate, INPUT);
+            assert dueDate != null : "Parsed dueDate should not be null";
         } catch (DateTimeParseException e){
             throw new BoffBotException("Date must be in format yyyy-mm-dd");
         }

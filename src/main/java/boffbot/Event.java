@@ -11,8 +11,10 @@ public class Event extends Task {
     protected LocalDate  start;
     protected LocalDate  end;
 
-    private static final DateTimeFormatter INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final DateTimeFormatter INPUT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter OUTPUT =
+            DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
      * Constructs an Event task.
@@ -25,9 +27,15 @@ public class Event extends Task {
     public Event(String description, String start, String end) throws BoffBotException {
         super(description);
 
+        assert start != null : "Event start date should not be null";
+        assert end != null : "Event end date should not be null";
+
         try {
             this.start = LocalDate.parse(start, INPUT);
             this.end = LocalDate.parse(end, INPUT);
+
+            assert !this.end.isBefore(this.start)
+                    : "Event end date should not be before start date";
 
         } catch (DateTimeParseException e) {
             throw new BoffBotException("Date must be in format yyyy-mm-dd");
