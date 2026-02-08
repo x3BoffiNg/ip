@@ -27,9 +27,12 @@ public class Parser {
      */
     public static boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
 
-        if (isExitCommand(input, ui)) {
-            return true;
-        }
+        assert input != null : "Input should not be null";
+        assert tasks != null : "TaskList should not be null";
+        assert ui != null : "UI should not be null";
+        assert storage != null : "Storage should not be null";
+
+
 
         if (isListCommand(input, tasks, ui)) {
             return false;
