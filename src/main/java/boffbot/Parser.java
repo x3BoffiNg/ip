@@ -1,5 +1,7 @@
 package boffbot;
 
+import java.time.LocalDate;
+
 /**
  * Parses user commands and executes corresponding actions.
  */
@@ -14,6 +16,7 @@ public class Parser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_REMIND = "remind";
 
     /**
      * Parses user input and performs the corresponding command.
@@ -41,6 +44,10 @@ public class Parser {
         }
 
         if (handleMarkUnmark(input, tasks, ui, storage)) {
+            return false;
+        }
+
+        if (handleRemind(input, tasks, ui)) {
             return false;
         }
 
@@ -127,6 +134,36 @@ public class Parser {
 
         ui.showMessage(task.toString());
         storage.save(tasks.getAll());
+        return true;
+    }
+
+    /**
+     * Handles the remind command which shows deadlines due tomorrow.
+     *
+     * @param input User input
+     * @param tasks Task list
+     * @param ui User interface
+     * @return true if handled
+     */
+    private static boolean handleRemind(String input, TaskList tasks, Ui ui) {
+        if (!input.equals(COMMAND_REMIND)) {
+            return false;
+        }
+
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        ui.showMessage("Here are your tasks due tomorrow:");
+
+        long count = tasks.getAll().stream()
+                .filter(task -> task instanceof Deadline)
+                .map(task -> (Deadline) task)
+                .filter(d -> d.getDueDate().equals(tomorrow))
+                .peek(d -> ui.showMessage(d.toString()))
+                .count();
+
+        if (count == 0) {
+            ui.showMessage("No deadlines due tomorrow 🎉");
+        }
+
         return true;
     }
 

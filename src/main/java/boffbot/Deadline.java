@@ -33,6 +33,10 @@ public class Deadline extends Task {
         }
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + dueDate.format(OUTPUT) + ")";
