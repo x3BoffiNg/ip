@@ -161,14 +161,12 @@ public class Parser {
 
             ui.showMessage("Here are the matching tasks in your list:");
 
-            int count = 0;
-            for (int i = 0; i < tasks.size(); i++) {
-                Task task = tasks.get(i);
-                if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
-                    ui.showMessage((count + 1) + ". " + task);
-                    count++;
-                }
-            }
+            long count = tasks.getAll().stream()
+                    .filter(task -> task.getDescription()
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase()))
+                    .peek(task -> ui.showMessage(task.toString()))
+                    .count();
 
             if (count == 0) {
                 ui.showMessage("No matching tasks found.");
