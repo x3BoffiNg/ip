@@ -19,6 +19,7 @@ public class Storage {
      * @param filePath The path to the data file.
      */
     public Storage(String filePath) {
+        assert filePath != null : "File path should not be null";
         this.filePath = filePath;
     }
 
@@ -52,6 +53,8 @@ public class Storage {
      * @throws IOException If file writing fails.
      */
     public void save(List<Task> tasks) throws IOException {
+        assert tasks != null : "Task list to save should not be null";
+
         FileWriter fw = new FileWriter(filePath);
         for (Task t : tasks) {
             fw.write(t.toFileFormat() + System.lineSeparator());
