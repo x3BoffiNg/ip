@@ -32,6 +32,10 @@ public class Main extends Application {
             controller.setBoffBot(boffBot);
 
             Scene scene = new Scene(ap);
+            scene.getStylesheets().add(
+                    Main.class.getResource("/view/style.css").toExternalForm()
+            );
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

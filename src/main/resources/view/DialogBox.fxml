@@ -16,7 +16,8 @@
         <Label fx:id="dialog"
                text="Label"
                wrapText="true"
-               minHeight="-Infinity"/>
+               minHeight="-Infinity"
+               styleClass="chat-bubble"/>
 
         <ImageView fx:id="displayPicture"
                    fitHeight="99.0"

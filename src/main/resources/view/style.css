@@ -1,0 +1,51 @@
+/* Background */
+.root {
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: "Segoe UI", "Arial";
+}
+
+/* Scroll pane */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+/* User text input */
+.text-field {
+    -fx-background-radius: 20;
+    -fx-background-color: white;
+    -fx-padding: 10 15 10 15;
+    -fx-font-size: 14px;
+}
+
+/* Send button */
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.chat-bubble {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);
+}
+
+.user-bubble {
+    -fx-background-color: #DCF8C6;
+    -fx-text-fill: black;
+
+}
+
+.bot-bubble {
+    -fx-background-color: #8FFFF0;
+    -fx-text-fill: black;
+
+}
