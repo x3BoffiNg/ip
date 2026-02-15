@@ -79,18 +79,12 @@ public class Task {
         boolean isDone = parts[1].equals("1");
         String desc = parts[2];
 
-        Task t;
-        switch (type) {
-            case "T":
-                t = new Todo(desc);
-                break;
-            case "D":
-                t = new Deadline(desc, parts[3]); break;
-            case "E":
-                t = new Event(desc, parts[3], parts[4]); break;
-            default:
-                throw new IllegalArgumentException();
-        }
+        Task t = switch (type) {
+            case "T" -> new Todo(desc);
+            case "D" -> new Deadline(desc, parts[3]);
+            case "E" -> new Event(desc, parts[3], parts[4]);
+            default -> throw new IllegalArgumentException();
+        };
 
         if (isDone) {
             t.mark();

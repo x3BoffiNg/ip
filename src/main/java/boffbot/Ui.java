@@ -17,6 +17,11 @@ public class Ui {
     }
 
     public void showTaskList(TaskList tasks) {
+        if (tasks.size() == 0) {
+            output.append("No tasks currently. Add a new task!\n");
+            return;
+        }
+
         output.append("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
             output.append((i + 1))
