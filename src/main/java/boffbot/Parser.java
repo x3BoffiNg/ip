@@ -146,7 +146,7 @@ public class Parser {
      * @return true if handled
      */
     private static boolean handleRemind(String input, TaskList tasks, Ui ui) {
-        if (!input.equals(COMMAND_REMIND)) {
+        if (!input.equalsIgnoreCase(COMMAND_REMIND)) {
             return false;
         }
 
