@@ -16,7 +16,7 @@ public class Parser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_FIND = "find";
-    private static final String COMMAND_REMIND = "remind";
+    private static final String COMMAND_reminder = "reminder";
 
     /**
      * Parses user input and performs the corresponding command.
@@ -28,7 +28,7 @@ public class Parser {
      * @return True if the user wants to exit, false otherwise.
      * @throws Exception If the command is invalid.
      */
-    public static boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    public static void parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
 
         assert input != null : "Input should not be null";
         assert tasks != null : "TaskList should not be null";
@@ -36,39 +36,39 @@ public class Parser {
         assert storage != null : "Storage should not be null";
 
         if (isExitCommand(input, ui)) {
-            return true;
+            return;
         }
 
         if (isListCommand(input, tasks, ui)) {
-            return false;
+            return;
         }
 
         if (handleMarkUnmark(input, tasks, ui, storage)) {
-            return false;
+            return;
         }
 
-        if (handleRemind(input, tasks, ui)) {
-            return false;
+        if (handlereminder(input, tasks, ui)) {
+            return;
         }
 
         if (handleTodo(input, tasks, ui, storage)) {
-            return false;
+            return;
         }
 
         if (handleDeadline(input, tasks, ui, storage)) {
-            return false;
+            return;
         }
 
         if (handleEvent(input, tasks, ui, storage)) {
-            return false;
+            return;
         }
 
         if (handleDelete(input, tasks, ui, storage)) {
-            return false;
+            return;
         }
 
         if (handleFind(input, tasks, ui)) {
-            return false;
+            return;
         }
 
         throw new BoffBotException("I'm Sorry I don't know what that means TT");
@@ -138,15 +138,15 @@ public class Parser {
     }
 
     /**
-     * Handles the remind command which shows deadlines due tomorrow.
+     * Handles the reminder command which shows deadlines due tomorrow.
      *
      * @param input User input
      * @param tasks Task list
      * @param ui User interface
      * @return true if handled
      */
-    private static boolean handleRemind(String input, TaskList tasks, Ui ui) {
-        if (!input.equalsIgnoreCase(COMMAND_REMIND)) {
+    private static boolean handlereminder(String input, TaskList tasks, Ui ui) {
+        if (!input.equalsIgnoreCase(COMMAND_reminder)) {
             return false;
         }
 

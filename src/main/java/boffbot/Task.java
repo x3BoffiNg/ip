@@ -71,6 +71,10 @@ public class Task {
      */
     public static Task fromFileFormat(String line)  throws BoffBotException {
         String[] parts = line.split(" \\| ");
+        if (parts.length < 3) {
+            throw new BoffBotException("Corrupted task data in file.");
+        }
+
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String desc = parts[2];

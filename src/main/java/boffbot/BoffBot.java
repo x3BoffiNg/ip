@@ -39,7 +39,7 @@ public class BoffBot {
      */
     public String getResponse(String input) {
         try {
-            boolean isExit = Parser.parse(input, tasks, ui, storage);
+            Parser.parse(input, tasks, ui, storage);
             return ui.consumeOutput();
         } catch (Exception e) {
             return e.getMessage();
