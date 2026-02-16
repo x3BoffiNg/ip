@@ -281,3 +281,22 @@ BoffBot handles common user errors gracefully, including:
 - Missing data file  
 
 Clear error messages are displayed in the GUI to guide users.
+
+---
+
+## Command Summary
+
+| Action | Format & Example |
+|--------|-----------------|
+| **Add Todo** | `todo <description>`  <br> e.g., `todo read book` |
+| **Add Deadline** | `deadline <description> /by <yyyy-MM-dd>`  <br> e.g., `deadline submit report /by 2024-12-01` |
+| **Add Event** | `event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>`  <br> e.g., `event meeting /from 2024-11-10 /to 2024-11-12` |
+| **List Tasks** | `list` |
+| **Mark Task** | `mark <task number>`  <br> e.g., `mark 1` |
+| **Unmark Task** | `unmark <task number>`  <br> e.g., `unmark 1` |
+| **Delete Task** | `delete <task number>`  <br> e.g., `delete 2` |
+| **Find Tasks** | `find <keyword>`  <br> e.g., `find book` |
+| **Remind Deadlines** | `remind` |
+| **Exit** | `bye` |
+
+---
