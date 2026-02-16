@@ -2,8 +2,8 @@
 
 ![Ui](Ui.png)
 
-BoffBot is a GUI-based task management chatbot designed to help users manage their daily tasks efficiently.  
-It supports adding todos, deadlines, and events, along with marking, deleting, searching, and reminder features.
+BoffBot is a GUI-based task management chatbot that helps users manage and organize their tasks efficiently.  
+It supports adding todos, deadlines, and events, as well as marking, deleting, searching, and reminder features.
 
 All tasks are automatically saved and loaded from local storage.
 
@@ -25,11 +25,19 @@ Adds a simple task without a date.
 
 `todo read book`
 
-### What it does
+### Expected output
 
-Creates a new task with the given description and marks it as incomplete.
+```
+Got it. I've added this task:
+[T][ ] read book
+Now you have 1 tasks in the list.
+```
 
-If the description is empty, an error message will be shown.
+If the description is empty:
+
+```
+Invalid input!!! The description of a todo cannot be empty.
+```
 
 ---
 
@@ -45,12 +53,19 @@ Adds a task with a due date.
 
 `deadline submit assignment /by 2024-12-01`
 
-### What it does
+### Expected output
 
-Creates a deadline task with the specified due date.
+```
+Got it. I've added this task:
+[D][ ] submit assignment (by: Dec 01 2024)
+Now you have 2 tasks in the list.
+```
 
-The date must follow the format `yyyy-MM-dd`.  
-If the date format is invalid, an error message will be displayed.
+If the date format is invalid:
+
+```
+Date must be in format yyyy-mm-dd
+```
 
 ---
 
@@ -66,12 +81,19 @@ Adds a task with a start and end date.
 
 `event project meeting /from 2024-11-10 /to 2024-11-12`
 
-### What it does
+### Expected output
 
-Creates an event with a start and end date.
+```
+Got it. I've added this task:
+[E][ ] project meeting (start: Nov 10 2024 end: Nov 12 2024)
+Now you have 3 tasks in the list.
+```
 
-Both dates must follow the format `yyyy-MM-dd`.  
-The end date cannot be before the start date.
+If the end date is before the start date:
+
+```
+End date cannot be before start date.
+```
 
 ---
 
@@ -83,11 +105,19 @@ Displays all current tasks.
 
 `list`
 
-### What it does
+If tasks exist:
 
-Shows all tasks in numbered order.
+```
+Here are the tasks in your list:
+1. [T][ ] read book
+2. [D][ ] submit assignment (by: Dec 01 2024)
+```
 
-If there are no tasks, BoffBot will inform the user that the task list is empty.
+If no tasks exist:
+
+```
+No tasks currently. Add a new task!
+```
 
 ---
 
@@ -103,11 +133,18 @@ Marks a task as completed.
 
 `mark 1`
 
-### What it does
+### Expected output
 
-Marks the specified task as done.
+```
+Nice! I've marked this task as done:
+[T][X] read book
+```
 
-If the task number is invalid, an error message will be shown.
+If the task number is invalid:
+
+```
+Invalid!! Please enter a number between 1 and 3
+```
 
 ---
 
@@ -123,9 +160,12 @@ Marks a task as not completed.
 
 `unmark 1`
 
-### What it does
+### Expected output
 
-Marks the specified task as not done.
+```
+OK, I've marked this task as not done yet:
+[T][ ] read book
+```
 
 ---
 
@@ -141,9 +181,13 @@ Removes a task from the list.
 
 `delete 2`
 
-### What it does
+### Expected output
 
-Deletes the specified task and updates the task count.
+```
+Noted. I've removed this task:
+[D][ ] submit assignment (by: Dec 01 2024)
+Now you have 2 tasks in the list.
+```
 
 ---
 
@@ -159,27 +203,41 @@ Searches for tasks containing a keyword.
 
 `find book`
 
-### What it does
+### Expected output
 
-Displays all tasks whose descriptions contain the given keyword.
+```
+Here are the matching tasks in your list:
+[T][ ] read book
+```
 
-If no matching tasks are found, BoffBot will inform the user.
+If no matches are found:
+
+```
+No matching tasks found.
+```
 
 ---
 
 ## Reminding Upcoming Deadlines
 
-Shows deadlines that are due tomorrow.
+Displays deadlines due tomorrow.
 
 ### Format
 
 `remind`
 
-### What it does
+If deadlines exist:
 
-Displays all deadline tasks due the next day.
+```
+Here are your tasks due tomorrow:
+[D][ ] submit report (by: Nov 20 2024)
+```
 
-If there are no deadlines due tomorrow, BoffBot will indicate that none are found.
+If none exist:
+
+```
+No deadlines due tomorrow 🎉
+```
 
 ---
 
@@ -191,21 +249,29 @@ Closes the chatbot session.
 
 `bye`
 
+### Expected output
+
+```
+Bye. Hope to see you again soon!
+```
+
 ---
 
 # Data Storage
 
-All tasks are saved automatically to:
+All tasks are automatically saved to:
 
-`data/boffbot.txt`
+```
+data/boffbot.txt
+```
 
-When BoffBot starts, it loads previously saved tasks automatically.
+When BoffBot starts, previously saved tasks are loaded automatically.
 
 ---
 
 # Error Handling
 
-BoffBot handles common errors gracefully, including:
+BoffBot handles common user errors gracefully, including:
 
 - Missing descriptions  
 - Invalid task numbers  
@@ -214,4 +280,4 @@ BoffBot handles common errors gracefully, including:
 - Empty task list  
 - Missing data file  
 
-Clear error messages are displayed in the GUI to guide the user.
+Clear error messages are displayed in the GUI to guide users.
