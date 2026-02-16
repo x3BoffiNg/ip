@@ -207,7 +207,7 @@ Searches for tasks containing a keyword.
 
 ```
 Here are the matching tasks in your list:
-1. [T][ ] read book
+[T][ ] read book
 ```
 
 If no matches are found:
@@ -224,13 +224,13 @@ Displays deadlines due tomorrow.
 
 ### Format
 
-`remind`
+`reminder`
 
 If deadlines exist:
 
 ```
 Here are your tasks due tomorrow:
-1. [D][ ] submit report (by: Nov 20 2024)
+[D][ ] submit report (by: Nov 20 2024)
 ```
 
 If none exist:
@@ -296,7 +296,7 @@ Clear error messages are displayed in the GUI to guide users.
 | **Unmark Task** | `unmark <task number>`  <br> e.g., `unmark 1` |
 | **Delete Task** | `delete <task number>`  <br> e.g., `delete 2` |
 | **Find Tasks** | `find <keyword>`  <br> e.g., `find book` |
-| **Remind Deadlines** | `remind` |
+| **Remind Deadlines** | `reminder` |
 | **Exit** | `bye` |
 
 ---
