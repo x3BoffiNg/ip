@@ -1,13 +1,19 @@
 # BoffBot User Guide
 
-// Update the title above to match the actual product name
-
-// Product screenshot goes here
 ![Ui](./Ui.png)
 
 // Product intro goes here
 
-## Adding deadlines
+BoffBot is a simple yet powerful task management chatbot with a graphical user interface (GUI).  
+It helps users organize their tasks efficiently by supporting todos, deadlines, and events.
+
+BoffBot allows users to:
+- Add and manage tasks
+- Mark and unmark tasks
+- Delete tasks
+- Search for tasks by keyword
+- View tasks due tomorrow
+- Automatically save and load tasks from file
 
 // Describe the action and its outcome.
 
