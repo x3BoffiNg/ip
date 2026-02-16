@@ -207,7 +207,7 @@ Searches for tasks containing a keyword.
 
 ```
 Here are the matching tasks in your list:
-[T][ ] read book
+1. [T][ ] read book
 ```
 
 If no matches are found:
@@ -230,7 +230,7 @@ If deadlines exist:
 
 ```
 Here are your tasks due tomorrow:
-[D][ ] submit report (by: Nov 20 2024)
+1. [D][ ] submit report (by: Nov 20 2024)
 ```
 
 If none exist:
