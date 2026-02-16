@@ -44,12 +44,14 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (start: " + start.format(OUTPUT) + " end: " + end.format(OUTPUT) + ")";
+        return "[E]" + super.toString() + " (start: " + start.format(OUTPUT) +
+                " end: " + end.format(OUTPUT) + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " | " + end;
+        return "E | " + (isDone ? "1" : "0") + " | " + description +
+                " | " + start + " | " + end;
     }
 
 }

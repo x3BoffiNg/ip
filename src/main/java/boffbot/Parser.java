@@ -25,7 +25,6 @@ public class Parser {
      * @param tasks The task list.
      * @param ui The user interface.
      * @param storage The storage handler.
-     * @return True if the user wants to exit, false otherwise.
      * @throws Exception If the command is invalid.
      */
     public static void parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
@@ -115,7 +114,9 @@ public class Parser {
      * @return {@code true} if mark/unmark command was handled, {@code false} otherwise.
      * @throws Exception If task index is invalid.
      */
-    private static boolean handleMarkUnmark(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    private static boolean handleMarkUnmark(String input, TaskList tasks,
+                                            Ui ui, Storage storage) throws Exception {
+
         if (!input.startsWith(COMMAND_MARK + " ") && !input.startsWith(COMMAND_UNMARK + " ")) {
             return false;
         }
@@ -177,7 +178,8 @@ public class Parser {
      * @return {@code true} if todo command was handled, {@code false} otherwise.
      * @throws Exception If description is empty.
      */
-    private static boolean handleTodo(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    private static boolean handleTodo(String input, TaskList tasks,
+                                      Ui ui, Storage storage) throws Exception {
         if (!input.startsWith(COMMAND_TODO)) {
             return false;
         }
@@ -202,7 +204,8 @@ public class Parser {
      * @return {@code true} if deadline command was handled, {@code false} otherwise.
      * @throws Exception If input format is invalid.
      */
-    private static boolean handleDeadline(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    private static boolean handleDeadline(String input, TaskList tasks,
+                                          Ui ui, Storage storage) throws Exception {
         if (!input.startsWith(COMMAND_DEADLINE)) {
             return false;
         }
@@ -230,7 +233,8 @@ public class Parser {
      * @return {@code true} if event command was handled, {@code false} otherwise.
      * @throws Exception If input format is invalid.
      */
-    private static boolean handleEvent(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    private static boolean handleEvent(String input, TaskList tasks,
+                                       Ui ui, Storage storage) throws Exception {
         if (!input.startsWith(COMMAND_EVENT)) {
             return false;
         }
@@ -258,7 +262,8 @@ public class Parser {
      * @return {@code true} if delete command was handled, {@code false} otherwise.
      * @throws Exception If task index is invalid.
      */
-    private static boolean handleDelete(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    private static boolean handleDelete(String input, TaskList tasks,
+                                        Ui ui, Storage storage) throws Exception {
         if (!input.startsWith(COMMAND_DELETE)) {
             return false;
         }
@@ -282,7 +287,8 @@ public class Parser {
      * @param ui    User interface for displaying messages.
      * @return {@code true} if find command was handled, {@code false} otherwise.
      */
-    private static boolean handleFind(String input, TaskList tasks, Ui ui) throws BoffBotException {
+    private static boolean handleFind(String input,
+                                      TaskList tasks, Ui ui) throws BoffBotException {
         if (!input.startsWith(COMMAND_FIND)) {
             return false;
         }
@@ -318,7 +324,8 @@ public class Parser {
      * @return Parsed task number.
      * @throws BoffBotException If task number is invalid.
      */
-    private static int parseTaskNumber(String[] parts, String command, int max) throws BoffBotException {
+    private static int parseTaskNumber(String[] parts,
+                                       String command, int max) throws BoffBotException {
         if (parts.length < 2) {
             throw new BoffBotException("Invalid input!! Please Use: " + command + " <number>");
         }
@@ -346,7 +353,8 @@ public class Parser {
      * @param task    Task to be added.
      * @throws Exception If saving fails.
      */
-    private static void addTask(TaskList tasks, Ui ui, Storage storage, Task task) throws Exception {
+    private static void addTask(TaskList tasks, Ui ui,
+                                Storage storage, Task task) throws Exception {
         tasks.add(task);
         storage.save(tasks.getAll());
 

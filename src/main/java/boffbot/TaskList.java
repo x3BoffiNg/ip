@@ -76,12 +76,4 @@ public class TaskList {
         return tasks;
     }
 
-    /**
-     * Prints all tasks to the console.
-     */
-    public void printTasks() {
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
-        }
-    }
 }

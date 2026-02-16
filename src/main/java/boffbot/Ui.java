@@ -7,10 +7,6 @@ package boffbot;
 public class Ui {
     private StringBuilder output = new StringBuilder();
 
-    public void showWelcome() {
-        output.append("Hello! I'm BoffBot.\n");
-        output.append("What can I do for you?\n");
-    }
 
     public void showMessage(String msg) {
         output.append(msg).append("\n");
