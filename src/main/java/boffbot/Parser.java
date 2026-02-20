@@ -162,7 +162,7 @@ public class Parser {
                 .count();
 
         if (count == 0) {
-            ui.showMessage("No deadlines due tomorrow 🎉");
+            ui.showMessage("No deadlines due tomorrow :>");
         }
 
         return true;
