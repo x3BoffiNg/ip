@@ -3,3 +3,4 @@ D | 0 | Submit proposal | 2026-02-17
 E | 0 | 2103 Finals | 2026-03-21 | 2026-03-22
 D | 0 | submit test | 2026-02-17
 D | 1 | Deliver parcel | 2026-12-02
+T | 0 | GESS1025 Slide
