@@ -27,7 +27,7 @@ public class Parser {
      * @param storage The storage handler.
      * @throws Exception If the command is invalid.
      */
-    public static void parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
+    public static boolean parse(String input, TaskList tasks, Ui ui, Storage storage) throws Exception {
 
         assert input != null : "Input should not be null";
         assert tasks != null : "TaskList should not be null";
@@ -35,39 +35,39 @@ public class Parser {
         assert storage != null : "Storage should not be null";
 
         if (isExitCommand(input, ui)) {
-            return;
+            return true;
         }
 
         if (isListCommand(input, tasks, ui)) {
-            return;
+            return false;
         }
 
         if (handleMarkUnmark(input, tasks, ui, storage)) {
-            return;
+            return false;
         }
 
         if (handlereminder(input, tasks, ui)) {
-            return;
+            return false;
         }
 
         if (handleTodo(input, tasks, ui, storage)) {
-            return;
+            return false;
         }
 
         if (handleDeadline(input, tasks, ui, storage)) {
-            return;
+            return false;
         }
 
         if (handleEvent(input, tasks, ui, storage)) {
-            return;
+            return false;
         }
 
         if (handleDelete(input, tasks, ui, storage)) {
-            return;
+            return false;
         }
 
         if (handleFind(input, tasks, ui)) {
-            return;
+            return false;
         }
 
         throw new BoffBotException("I'm Sorry I don't know what that means TT");

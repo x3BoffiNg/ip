@@ -1,11 +1,14 @@
 package boffbot;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Controller for the main GUI window of BoffBot.
@@ -53,11 +56,25 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = boffBot.getResponse(input);
+
+        boolean isExit = false;
+
+        if (response.contains("__EXIT__")) {
+            isExit = true;
+            response = response.replace("__EXIT__", "");
+        }
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getBotDialog(response, boffImage)
         );
-        userInput.clear();
-    }
 
+        userInput.clear();
+
+        if (isExit) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
+    }
 }

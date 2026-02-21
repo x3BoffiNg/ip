@@ -39,11 +39,22 @@ public class BoffBot {
      */
     public String getResponse(String input) {
         try {
-            Parser.parse(input, tasks, ui, storage);
-            return ui.consumeOutput();
+            boolean isExit = Parser.parse(input, tasks, ui, storage);
+            String response = ui.consumeOutput();
+
+            if (isExit) {
+                response += "__EXIT__";  // special marker
+            }
+
+            return response;
+
         } catch (Exception e) {
             return e.getMessage();
         }
+    }
+
+    public Ui getUi() {
+        return ui;
     }
 
 }
