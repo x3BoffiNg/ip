@@ -38,7 +38,6 @@ public class Main extends Application {
 
             stage.setScene(scene);
             stage.setTitle("BoffBot");
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

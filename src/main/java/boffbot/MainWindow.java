@@ -30,8 +30,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        scrollPane.setFitToWidth(true);
     }
-
     /**
      * Injects the BoffBot instance into the GUI controller.
      * <p>
