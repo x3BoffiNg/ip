@@ -1,0 +1,4 @@
+T | 1 | CS2103 Tutorial
+D | 0 | Submit proposal | 2026-02-21
+E | 0 | Final exam | 2026-04-20 | 2026-04-21
+D | 0 | Submit Tutorial | 2026-02-23
