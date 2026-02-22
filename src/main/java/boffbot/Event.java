@@ -37,6 +37,10 @@ public class Event extends Task {
             assert !this.end.isBefore(this.start)
                     : "Event end date should not be before start date";
 
+            if (this.start.isAfter(this.end)) {
+                throw new BoffBotException("Start date cannot be after end date.");
+            }
+
         } catch (DateTimeParseException e) {
             throw new BoffBotException("Date must be in format yyyy-mm-dd");
         }

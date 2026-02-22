@@ -1,5 +1,0 @@
-T | 1 | CS2103 Tutorial
-D | 0 | Submit proposal | 2026-02-21
-E | 0 | Finals exam | 2026-04-22 | 2026-04-24
-D | 0 | Deliver parcels | 2026-02-22
-g
